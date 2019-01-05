@@ -454,11 +454,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CyberPunk_Blonde Variant 1
       objectReference: {fileID: 0}
-    - target: {fileID: 223466248763830056, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 4572776585928625326, guid: bb0b96e83c61e4f4aa58c74ab957871e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -514,35 +509,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 423514039169127037, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: m_Simulated
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 644579754563874887, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329741605162422549, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: maxVelocity
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
         type: 3}
       propertyPath: jumpForce
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-        type: 3}
-      propertyPath: bulletSpeed
-      value: 10
+      value: 3.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb0b96e83c61e4f4aa58c74ab957871e, type: 3}
