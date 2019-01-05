@@ -5,8 +5,6 @@
 [RequireComponent(typeof(Animator))]
 
 
-
-
 public class Input_Controller : MonoBehaviour {
 
     Rigidbody2D rb;
@@ -23,10 +21,14 @@ public class Input_Controller : MonoBehaviour {
     [SerializeField]
     float maxVelocity = 10f;
 
+    public float bulletSpeed = 10f;
+    public float tresholdX = 0.1f;
+    public float tresholdY = 0.14f;
+
     public GameObject bulletPrefab;
 
     //this variable is used for the screen wrapping
-    float screenHalfWidthInWorldUnits;
+    //float screenHalfWidthInWorldUnits;
 
 
     void Start ()
@@ -36,8 +38,8 @@ public class Input_Controller : MonoBehaviour {
         anim = GetComponentInChildren<Animator>();
 
         //these lines are used to calculate screen wrapping
-        float halfPlayerWidth = transform.localScale.x / 2f;
-        screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
+        //float halfPlayerWidth = transform.localScale.x / 2f;
+        //screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
     }
 
     void Update ()
@@ -163,7 +165,11 @@ public class Input_Controller : MonoBehaviour {
         #endregion // //controls and sprite manipulation
 
         //camera wrap
+        /*
         #region
+
+    
+        print(screenHalfWidthInWorldUnits);
         //controls the camera wrap
         if (transform.position.x < -screenHalfWidthInWorldUnits)
         {
@@ -175,6 +181,7 @@ public class Input_Controller : MonoBehaviour {
             transform.position = new Vector2(-screenHalfWidthInWorldUnits, transform.position.y);
         }
         #endregion//camera wrap 
+        */
     }
 
 
@@ -214,38 +221,44 @@ public class Input_Controller : MonoBehaviour {
     private void Fire()
     {
 
-
         if (Srend.flipX == true)
         {
 
-            Vector2 pos = transform.position;
-            pos.y += 0.7f;
-            pos.x += -1.5f;
+            Vector3 pos = transform.position;
+            Vector3 scale = transform.localScale;
+            pos.y += tresholdY * scale.y;
+            pos.x += -tresholdX * scale.x;
+            pos.z = 0.1f;
+            
 
             // Create the Bullet from the Bullet Prefab
             var bullet = (GameObject)Instantiate(
                 bulletPrefab,
                 pos,
                 transform.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-20.0f, 0);
+            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-bulletSpeed, 0);
             bullet.GetComponent<SpriteRenderer>().flipX = true;
+            bullet.transform.localScale = Vector3.Scale(bullet.transform.localScale, scale);
             // Destroy the bullet after 2 seconds
             Destroy(bullet, 2.0f);
 
         }
         else
         {
-            Vector2 pos = transform.position;
-            pos.y += 0.7f;
-            pos.x += 1.5f;
+            Vector3 pos = transform.position;
+            Vector3 scale = transform.localScale;
+            pos.y += tresholdY * scale.y;
+            pos.x += tresholdX * scale.x;
+            pos.z = 0.1f;
 
             // Create the Bullet from the Bullet Prefab
             var bullet = (GameObject)Instantiate(
                 bulletPrefab,
                 pos,
                 transform.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(20.0f, 0);
-            
+            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed, 0);
+            bullet.transform.localScale = Vector3.Scale(bullet.transform.localScale, scale);
+
             // Destroy the bullet after 2 seconds
             Destroy(bullet, 2.0f);
 
