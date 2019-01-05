@@ -13,22 +13,13 @@ public class Input_Controller : MonoBehaviour {
 
     bool isOnGround;
 
-    //change these variables if you wish to test different speeds and jump heights
-    [SerializeField]
-    float moveForce = .1f;
-    [SerializeField]
-    float jumpForce = 5f;
-    [SerializeField]
-    float maxVelocity = 10f;
-
+    public float jumpForce = 3f;
+    public float maxVelocity = 3f;
     public float bulletSpeed = 10f;
     public float tresholdX = 0.1f;
     public float tresholdY = 0.14f;
 
     public GameObject bulletPrefab;
-
-    //this variable is used for the screen wrapping
-    //float screenHalfWidthInWorldUnits;
 
 
     void Start ()
@@ -37,83 +28,57 @@ public class Input_Controller : MonoBehaviour {
         Srend = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
 
-        //these lines are used to calculate screen wrapping
-        //float halfPlayerWidth = transform.localScale.x / 2f;
-        //screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
     }
 
     void Update ()
     {
-
-        //controller and sprite manipulation
-        #region
-        //controller and sprite manipulation
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A))
         {
-            if (rb.velocity.x > 3)
-            {
-                anim.SetBool("IsSkid", true);
-            }else
-            {
-                anim.SetBool("IsSkid", false);
-            }
-        
-      
-            if (Mathf.Abs(rb.velocity.x) < maxVelocity)
-            {
-                rb.AddForce(Vector2.right * -1 * moveForce, ForceMode2D.Impulse);//moves the object
-                anim.SetFloat("MoveX", Mathf.Abs(rb.velocity.x));
-           
-            }
-            if (rb.velocity.x < 0)
-            {
-                Srend.flipX = true;//flips the sprite
-            }
-            anim.SetBool("Idle", false);
-            //call animation
+            float y = rb.velocity.y;
+            float x = 0;
+            rb.velocity = new Vector2(x, y);
+            anim.SetBool("Running", false);
+            
         }
-
-        if (Input.GetKey(KeyCode.D))
+        else if(Input.GetKey(KeyCode.A))
         {
-            if (rb.velocity.x < -3)
-            {
-                anim.SetBool("IsSkid", true);
-            }
-            else
-            {
-                anim.SetBool("IsSkid", false);
-            }
-
-            if (Mathf.Abs(rb.velocity.x) < maxVelocity)
-            {
-                rb.AddForce(Vector2.right * 1 * moveForce, ForceMode2D.Impulse);//moves the object
-                anim.SetFloat("MoveX", Mathf.Abs(rb.velocity.x));
-
-            }
-            //call animation
-            if (rb.velocity.x > 0 )
-            {
-                Srend.flipX = false;//flips the sprite
-            }
-            anim.SetBool("Idle", false);
-
+            float y = rb.velocity.y;
+            float x = -1 * maxVelocity;
+            rb.velocity = new Vector2(x, y);
+            anim.SetBool("Running", true);
+            anim.SetTrigger("Run");
+            Srend.flipX = true;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            float y = rb.velocity.y;
+            float x = 1 * maxVelocity;
+            rb.velocity = new Vector2(x, y);
+            anim.SetBool("Running", true);
+            anim.SetTrigger("Run");
+            Srend.flipX = false;
+        }
+        else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        {
+            float y = rb.velocity.y;
+            float x = 0;
+            rb.velocity = new Vector2(x, y);
+            anim.SetBool("Running", false);
+            anim.SetTrigger("Iddle");
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
-          
-
-            rb.AddForce(Vector2.up * 1 * jumpForce, ForceMode2D.Impulse);//moves the sprite
-            anim.SetTrigger("Jump");//call animation
+            rb.AddForce(Vector2.up * 1 * jumpForce, ForceMode2D.Impulse);
+            anim.SetTrigger("Jump");
             anim.SetBool("Idle", false);
-
         }
 
-        anim.SetFloat("MoveX", Mathf.Abs(rb.velocity.x));
         if (isOnGround)
         {
             anim.SetBool("Idle", true);
-        }else
+        }
+        else
         {
             anim.SetBool("Idle", false);
         }
@@ -129,7 +94,7 @@ public class Input_Controller : MonoBehaviour {
                 return;
             }
         }
-        if (isOnGround && Input.GetKeyUp(KeyCode.DownArrow))
+        if (isOnGround && Input.GetKeyUp(KeyCode.LeftControl))
         {
             anim.SetBool("IsDuck", false);
         }
@@ -149,39 +114,6 @@ public class Input_Controller : MonoBehaviour {
             if(anim.GetBool("Attacking"))
                 Fire();
         }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            anim.SetTrigger("Damaged");
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            anim.SetBool("Die", true);
-            anim.SetTrigger("Death");
-        }
-        if (Input.GetKeyUp(KeyCode.T))
-        {
-            anim.SetBool("Die", false);
-        }
-        #endregion // //controls and sprite manipulation
-
-        //camera wrap
-        /*
-        #region
-
-    
-        print(screenHalfWidthInWorldUnits);
-        //controls the camera wrap
-        if (transform.position.x < -screenHalfWidthInWorldUnits)
-        {
-            transform.position = new Vector2(screenHalfWidthInWorldUnits, transform.position.y);
-        }
-
-        if (transform.position.x > screenHalfWidthInWorldUnits)
-        {
-            transform.position = new Vector2(-screenHalfWidthInWorldUnits, transform.position.y);
-        }
-        #endregion//camera wrap 
-        */
     }
 
 

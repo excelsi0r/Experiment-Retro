@@ -529,6 +529,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: maxVelocity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: jumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: bulletSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb0b96e83c61e4f4aa58c74ab957871e, type: 3}
 --- !u!1 &376040113
