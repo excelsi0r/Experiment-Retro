@@ -47,10 +47,14 @@ public class SpawnerInput: MonoBehaviour
         if (player != null && (gc.up || gc.down))
         {
             gm.FadeInOut();
-            Invoke("Spawn", 1.1f);
+            Invoke("Spawn", 0.7f);
         }
     }
 
+
+    /// <summary>
+    /// Spawn predefined
+    /// </summary>
     void Spawn()
     {
         Vector3 pos = room.transform.position;
