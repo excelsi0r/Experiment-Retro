@@ -8,7 +8,8 @@ public class GameController : MonoBehaviour
     public enum GameState
     {
         Playing,
-        Pause
+        Pause,
+        Transition
     }
 
     public GameState state;

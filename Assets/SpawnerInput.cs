@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnerInput: MonoBehaviour
 {
+    public GameController gc;
+    public GameManager gm;
+
     public GameObject room;
 
     public float CameraOffset = -15.0f;
@@ -41,13 +44,21 @@ public class SpawnerInput: MonoBehaviour
 
     void Update()
     {
-        if (player != null && ((up && Input.GetKey(KeyCode.W)) || (!up && Input.GetKey(KeyCode.S))))
+        if (player != null && (gc.up || gc.down))
         {
-            Vector3 pos = room.transform.position;
-            pos.z = 0.0f;
-
-            player.transform.position = pos + new Vector3(PlayerOffsetX, PlayerOffsetY, 0.0f);
-            Camera.main.transform.position = pos + new Vector3(0.0f, -0.0f, CameraOffset);
+            gm.FadeInOut();
+            Invoke("Spawn", 1.1f);
         }
     }
+
+    void Spawn()
+    {
+        Vector3 pos = room.transform.position;
+        pos.z = 0.0f;
+
+        player.transform.position = pos + new Vector3(PlayerOffsetX, PlayerOffsetY, 0.0f);
+        Camera.main.transform.position = pos + new Vector3(0.0f, -0.0f, CameraOffset);
+    }
+
+
 }
