@@ -26,6 +26,7 @@ public class Input_Controller : MonoBehaviour {
 
     public GameObject bulletPrefab;
 
+    public GameController gc;
 
     void Start ()
     {
@@ -37,15 +38,15 @@ public class Input_Controller : MonoBehaviour {
 
     void Update ()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && isOnGround)
+        if (gc.crouch && isOnGround)
         {
             anim.SetBool("IsDuck", true);
 
-            if (Input.GetKey(KeyCode.A))
+            if (gc.left)
                 Srend.flipX = true;
-            if (Input.GetKey(KeyCode.D))
+            if (gc.right)
                 Srend.flipX = false;
-            if (Input.GetKey(KeyCode.F))
+            if (gc.attack)
             {
                 anim.SetBool("Attacking", true);
                 Fire();
@@ -60,12 +61,22 @@ public class Input_Controller : MonoBehaviour {
             anim.SetBool("IsDuck", false);
         }
 
-        if(Input.GetKey(KeyCode.Space))
+        if (gc.attack)
+        {
+            anim.SetBool("Attacking", true);
+            Fire();
+        }
+        else
+        {
+            anim.SetBool("Attacking", false);
+        }
+
+        if (gc.jump)
         {
             if (isOnGround)
             {
                 rb.velocity = Vector2.zero;
-                if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.LeftShift))
+                if (gc.left && gc.sprint)
                 {
                     Vector2 force;
                     force.x = -1 * maxVelocity;
@@ -73,7 +84,7 @@ public class Input_Controller : MonoBehaviour {
                     rb.AddForce(force, ForceMode2D.Impulse);
                     Srend.flipX = true;
                 }
-                else if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftShift))
+                else if(gc.right && gc.sprint)
                 {
                     Vector2 force;
                     force.x = 1 * maxVelocity;
@@ -81,7 +92,7 @@ public class Input_Controller : MonoBehaviour {
                     rb.AddForce(force, ForceMode2D.Impulse);
                     Srend.flipX = false;
                 }
-                else if(Input.GetKey(KeyCode.A))
+                else if(gc.left)
                 {
                     Vector2 force;
                     force.x = -1 * walkSpeed;
@@ -89,7 +100,7 @@ public class Input_Controller : MonoBehaviour {
                     rb.AddForce(force, ForceMode2D.Impulse);
                     Srend.flipX = true;
                 }
-                else if(Input.GetKey(KeyCode.D))
+                else if(gc.right)
                 {
                     Vector2 force;
                     force.x = 1 * walkSpeed;
@@ -110,7 +121,7 @@ public class Input_Controller : MonoBehaviour {
 
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.LeftShift) && isOnGround)
+        if (gc.left && gc.sprint && isOnGround)
         {
             rb.velocity = Vector2.zero;
             Vector2 force;
@@ -120,7 +131,7 @@ public class Input_Controller : MonoBehaviour {
             Srend.flipX = true;
             anim.SetBool("Running", true);
         }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftShift) && isOnGround)
+        else if (gc.right && gc.sprint && isOnGround)
         {
             rb.velocity = Vector2.zero;
             Vector2 force;
@@ -130,7 +141,7 @@ public class Input_Controller : MonoBehaviour {
             Srend.flipX = false;
             anim.SetBool("Running", true);
         }
-        else if (Input.GetKey(KeyCode.A) && isOnGround)
+        else if (gc.left && isOnGround)
         {
             rb.velocity = Vector2.zero;
             Vector2 force;
@@ -141,7 +152,7 @@ public class Input_Controller : MonoBehaviour {
             anim.SetBool("Running", false);
             Srend.flipX = true;
         }
-        else if (Input.GetKey(KeyCode.D) && isOnGround)
+        else if (gc.right && isOnGround)
         {
             rb.velocity = Vector2.zero;
             Vector2 force;
@@ -152,11 +163,11 @@ public class Input_Controller : MonoBehaviour {
             anim.SetBool("Running", false);
             Srend.flipX = false;
         }
-        else if(Input.GetKey(KeyCode.A) && !isOnGround)
+        else if(gc.left && !isOnGround)
         {
             Srend.flipX = true;
         }
-        else if (Input.GetKey(KeyCode.D) && !isOnGround)
+        else if (gc.right && !isOnGround)
         {
             Srend.flipX = false;
         }
@@ -171,16 +182,6 @@ public class Input_Controller : MonoBehaviour {
 
             anim.SetBool("Walking", false);
             anim.SetBool("Running", false);
-        }
-
-        if (Input.GetKey(KeyCode.F))
-        {
-            anim.SetBool("Attacking", true);
-            Fire();
-        }
-        else
-        {
-            anim.SetBool("Attacking", false);
         }
     }
 
