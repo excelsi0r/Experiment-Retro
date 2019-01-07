@@ -166,10 +166,20 @@ public class Input_Controller : MonoBehaviour {
         else if(gc.left && !isOnGround)
         {
             Srend.flipX = true;
+
+            Vector2 force;
+            force.x = -0.05f;
+            force.y = 0f;
+            rb.AddForce(force, ForceMode2D.Impulse);
         }
         else if (gc.right && !isOnGround)
         {
             Srend.flipX = false;
+
+            Vector2 force;
+            force.x = 0.05f;
+            force.y = 0f;
+            rb.AddForce(force, ForceMode2D.Impulse);
         }
         else
         {
