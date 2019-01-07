@@ -6,6 +6,7 @@ public class SpawnerInput: MonoBehaviour
 {
     public GameController gc;
     public GameManager gm;
+    public ElevatorHandler eh;
 
     public GameObject room;
 
@@ -44,10 +45,15 @@ public class SpawnerInput: MonoBehaviour
 
     void Update()
     {
-        if (player != null && (gc.up || gc.down))
+        if (player != null && ((gc.up && up) || (gc.down && !up)))
         {
             gm.FadeInOut();
             Invoke("Spawn", 0.7f);
+
+            if(room.name.Equals("Elevator"))
+            {
+                Invoke("StartElevator", 2.0f);
+            }
         }
     }
 
@@ -63,6 +69,13 @@ public class SpawnerInput: MonoBehaviour
         player.transform.position = pos + new Vector3(PlayerOffsetX, PlayerOffsetY, 0.0f);
         Camera.main.transform.position = pos + new Vector3(0.0f, -0.0f, CameraOffset);
     }
+
+    void StartElevator()
+    {
+        eh.ElevatorUp();
+    }
+
+
 
 
 }
