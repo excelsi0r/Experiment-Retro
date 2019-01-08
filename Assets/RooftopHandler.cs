@@ -8,6 +8,7 @@ public class RooftopHandler : MonoBehaviour
     GameObject player;
 
     public float cameraOffsetZ = -15.0f;
+    public float playerDeathCam = 10f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,7 +24,14 @@ public class RooftopHandler : MonoBehaviour
         {
             Vector3 playerPos = player.transform.position;
 
-            Vector3 newPos = new Vector3(playerPos.x, gameObject.transform.position.y, cameraOffsetZ);
+            float heigth;
+
+            if (playerPos.y > gameObject.transform.position.y - playerDeathCam)
+                heigth = playerPos.y;
+            else
+                heigth = gameObject.transform.position.y - playerDeathCam;
+
+            Vector3 newPos = new Vector3(playerPos.x, heigth, cameraOffsetZ);
             Camera.main.transform.position = newPos;
         }
     }

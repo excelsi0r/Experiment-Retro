@@ -117,7 +117,6 @@ public class Input_Controller : MonoBehaviour {
                     force.y = 1 * jumpForce;
                     rb.AddForce(force, ForceMode2D.Impulse);
                 }
-                anim.SetTrigger("Jump");
             }
             return;
 
@@ -226,7 +225,7 @@ public class Input_Controller : MonoBehaviour {
             isOnGround = false;
             anim.SetBool("IsOnGround", false);
             anim.SetBool("Idle", false);
-
+            anim.SetTrigger("Jump");
 
         }
     }

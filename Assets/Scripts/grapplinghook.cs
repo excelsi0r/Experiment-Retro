@@ -8,6 +8,7 @@ public class grapplinghook : MonoBehaviour
     Vector3 targetPos;
     RaycastHit2D hit;
     Rigidbody2D rb;
+    LayerMask testMask;
     public float distance = 4f;
     public LayerMask mask;
     public float step = 0.02f;
@@ -15,6 +16,7 @@ public class grapplinghook : MonoBehaviour
     public float verticalForce = 250f;
     public GameObject linePrefab;
     public GameController gc;
+    
     
 
     GameObject line;
@@ -25,6 +27,7 @@ public class grapplinghook : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         joint = GetComponent<DistanceJoint2D>();
         joint.enabled = false;
+        testMask = LayerMask.NameToLayer("Platform");
     }
 
     // Update is called once per frame
@@ -37,14 +40,14 @@ public class grapplinghook : MonoBehaviour
 
             hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
 
+            
 
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null && hit.transform.gameObject.layer == testMask)
             {
                 joint.enabled = true;
                 Vector2 connectPoint = hit.point - new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y);
                 connectPoint.x = connectPoint.x / hit.collider.transform.localScale.x;
                 connectPoint.y = connectPoint.y / hit.collider.transform.localScale.y;
-                Debug.Log(connectPoint);
                 joint.connectedAnchor = connectPoint;
 
                 joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
@@ -81,6 +84,14 @@ public class grapplinghook : MonoBehaviour
                 line = null;
                 rb.AddForce(new Vector2(0f, verticalForce));
             }
+        }
+
+        if(gc.jump && line != null)
+        {
+            joint.enabled = false;
+            Destroy(line);
+            line = null;
+            rb.AddForce(new Vector2(0f, verticalForce));
         }
 
         if (gc.down && line != null && joint.distance < distance)
