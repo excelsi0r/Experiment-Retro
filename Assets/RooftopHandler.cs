@@ -20,7 +20,7 @@ public class RooftopHandler : MonoBehaviour
 
     void Update()
     {
-        if(player != null)
+        if (player != null)
         {
             Vector3 playerPos = player.transform.position;
 
@@ -35,4 +35,11 @@ public class RooftopHandler : MonoBehaviour
             Camera.main.transform.position = newPos;
         }
     }
+
+
+    public void ExitRooftop()
+    {
+        player = null;
+    }
+
 }

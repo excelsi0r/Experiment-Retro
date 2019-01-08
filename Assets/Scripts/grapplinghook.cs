@@ -13,7 +13,7 @@ public class grapplinghook : MonoBehaviour
     public LayerMask mask;
     public float step = 0.02f;
     public float releaseDistance = 0.05f;
-    public float releaseForce = 10f;
+    public float jumpForce = 10f;
     public float impulseForce = 250f;
     public GameObject linePrefab;
     public GameController gc;
@@ -38,12 +38,13 @@ public class grapplinghook : MonoBehaviour
 
         if (gc.canGrapple && Input.GetMouseButtonDown(1))
         {
-            targetPos = GetWorldPositionOnPlane(Input.mousePosition, 1f);
+            if (!Camera.main.orthographic)
+                targetPos = GetWorldPositionOnPlane(Input.mousePosition, 1f);
+            else
+                targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = -0f;
 
             hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
-
-            
 
             if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null && hit.transform.gameObject.layer == testMask)
             {
@@ -94,7 +95,7 @@ public class grapplinghook : MonoBehaviour
             joint.enabled = false;
             Destroy(line);
             line = null;
-            rb.AddForce(new Vector2(0f, releaseForce));
+            rb.AddForce(new Vector2(0f, jumpForce));
         }
 
         if (gc.down && line != null && joint.distance < distance)

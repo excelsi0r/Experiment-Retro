@@ -6,6 +6,7 @@ public class SpawnerInput: MonoBehaviour
 {
     public GameController gc;
     public GameManager gm;
+    public RooftopHandler rh;
 
     public GameObject room;
 
@@ -47,6 +48,7 @@ public class SpawnerInput: MonoBehaviour
         if (player != null && ((gc.up && up) || (gc.down && !up)))
         {
             gm.FadeInOut();
+            Invoke("ExitRooftop", 0.5f);
             Invoke("Spawn", 0.7f);
         }
     }
@@ -57,10 +59,18 @@ public class SpawnerInput: MonoBehaviour
     /// </summary>
     void Spawn()
     {
+
         Vector3 pos = room.transform.position;
         pos.z = 0.0f;
-
         player.transform.position = pos + new Vector3(PlayerOffsetX, PlayerOffsetY, 0.0f);
         Camera.main.transform.position = pos + new Vector3(0.0f, -0.0f, CameraOffset);
+    }
+
+    void ExitRooftop()
+    {
+        if (rh != null)
+        {
+            rh.ExitRooftop();
+        }
     }
 }
