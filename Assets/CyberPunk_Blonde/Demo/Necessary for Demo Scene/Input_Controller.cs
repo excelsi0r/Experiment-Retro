@@ -41,6 +41,7 @@ public class Input_Controller : MonoBehaviour {
         if (gc.crouch && isOnGround)
         {
             anim.SetBool("IsDuck", true);
+            headAndBodyCollider.enabled = false;
 
             if (gc.left)
                 Srend.flipX = true;
@@ -59,6 +60,7 @@ public class Input_Controller : MonoBehaviour {
         else
         {
             anim.SetBool("IsDuck", false);
+            headAndBodyCollider.enabled = true;
         }
 
         if (gc.attack)

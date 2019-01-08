@@ -23,11 +23,8 @@ public class GameController : MonoBehaviour
     public bool jump { get; private set; }
     public bool attack { get; private set; }
     public bool interact { get; private set; }
-    public bool grappling { get; private set; }
-    public bool mouse { get; private set; }
-    public Vector3 mouseCoords { get; private set; }
 
-    public bool canSprint;
+    public bool canSprint; 
     public bool canGrapple;
     public bool canShoot;
 
@@ -58,10 +55,7 @@ public class GameController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) jump = true;
 
             if (Input.GetKeyDown(KeyCode.E)) interact = true;
-
-            if (Input.GetMouseButtonDown(1)) grappling = true;
-
-            if (Input.GetMouseButtonDown(0)) mouse = true;
+            
 
             //False
             if (Input.GetKeyUp(KeyCode.A)) left = false;
@@ -82,18 +76,11 @@ public class GameController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.E)) interact = false;
 
-            if (Input.GetMouseButtonUp(1)) grappling = false;
-
-            if (Input.GetMouseButtonUp(0)) mouse = false;
-
-            mouseCoords = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             //game variables
             if (!canSprint) sprint = false;
 
             if (!canShoot) attack = false;
 
-            if (!canGrapple) grappling = false;
         }
         else
         {
@@ -112,7 +99,5 @@ public class GameController : MonoBehaviour
         jump = false;
         attack = false;
         interact = false;
-        grappling = false;
-        mouse = false;
     }
 }

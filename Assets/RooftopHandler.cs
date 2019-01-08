@@ -22,9 +22,8 @@ public class RooftopHandler : MonoBehaviour
         if(player != null)
         {
             Vector3 playerPos = player.transform.position;
-            Vector3 cameraPos = Camera.main.transform.position;
 
-            Vector3 newPos = new Vector3(playerPos.x, cameraPos.y, cameraOffsetZ);
+            Vector3 newPos = new Vector3(playerPos.x, gameObject.transform.position.y, cameraOffsetZ);
             Camera.main.transform.position = newPos;
         }
     }

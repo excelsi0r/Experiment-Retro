@@ -7,16 +7,22 @@ public class grapplinghook : MonoBehaviour
     DistanceJoint2D joint;
     Vector3 targetPos;
     RaycastHit2D hit;
-    public float distance = 10f;
+    Rigidbody2D rb;
+    public float distance = 4f;
     public LayerMask mask;
     public float step = 0.02f;
+    public float releaseDistance = 0.05f;
+    public float verticalForce = 250f;
     public GameObject linePrefab;
+    public GameController gc;
+    
 
     GameObject line;
 
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         joint = GetComponent<DistanceJoint2D>();
         joint.enabled = false;
     }
@@ -24,12 +30,13 @@ public class grapplinghook : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if (Input.GetMouseButtonDown(1))
+        if (gc.canGrapple && Input.GetMouseButtonDown(1))
         {
-            targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPos.z = 0;
+            targetPos = GetWorldPositionOnPlane(Input.mousePosition, 1f);
+            targetPos.z = -0f;
 
             hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
+
 
             if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
             {
@@ -57,12 +64,38 @@ public class grapplinghook : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && line != null)
         {
             joint.enabled = false;
             Destroy(line);
             line = null;
         }
 
+        if(gc.up && line != null)
+        {
+            joint.distance -= step;
+            if(joint.distance <= releaseDistance)
+            {
+                joint.enabled = false;
+                Destroy(line);
+                line = null;
+                rb.AddForce(new Vector2(0f, verticalForce));
+            }
+        }
+
+        if (gc.down && line != null && joint.distance < distance)
+        {
+            joint.distance += step;
+        }
+
+    }
+
+    Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+        float distance;
+        xy.Raycast(ray, out distance);
+        return ray.GetPoint(distance);
     }
 }
