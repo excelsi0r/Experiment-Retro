@@ -38,6 +38,21 @@ public class Input_Controller : MonoBehaviour {
 
     void Update ()
     {
+        if(Input.GetKey(KeyCode.T))
+        {
+            anim.SetTrigger("Damaged");
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            anim.SetTrigger("Death");
+        }
+
+        if (Input.GetKey(KeyCode.H))
+        {
+            anim.SetTrigger("Revive");
+        }
+
         if (gc.crouch && isOnGround)
         {
             anim.SetBool("IsDuck", true);

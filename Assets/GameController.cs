@@ -9,7 +9,8 @@ public class GameController : MonoBehaviour
     {
         Playing,
         Pause,
-        Transition
+        Transition,
+        Death
     }
 
     public GameState state;
