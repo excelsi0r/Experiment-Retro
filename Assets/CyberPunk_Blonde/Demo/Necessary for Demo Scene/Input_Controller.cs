@@ -1,12 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 
 
-public class Input_Controller : MonoBehaviour {
+public class Input_Controller : MonoBehaviour
+{
+    //Checkpoint state
+    public static int GAME_CHECKPOINT = 0;
+    
+    //Health const paramethers
+    private const float MAX_HEALTH = 100f;
+    private const float DEC_HEALTH = 5f;
 
+    private float currHealth;
+    public SimpleHealthBar health;
+    public GameController gc;
+    public GameManager gm;
     Rigidbody2D rb;
     SpriteRenderer Srend;
     Animator anim;
@@ -26,7 +38,9 @@ public class Input_Controller : MonoBehaviour {
 
     public GameObject bulletPrefab;
 
-    public GameController gc;
+    public GameObject FirstCheckpoint;
+    public GameObject SecondCheckpoint;
+    public GameObject ThirdCheckpoint;
 
     void Start ()
     {
@@ -34,25 +48,56 @@ public class Input_Controller : MonoBehaviour {
         Srend = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         headAndBodyCollider = GetComponentInChildren<BoxCollider2D>();
+        currHealth = MAX_HEALTH;
+        health.UpdateBar(currHealth, MAX_HEALTH);
+        anim.SetTrigger("Revive");
+
+        //Respawn with checkpoints
+        if (GAME_CHECKPOINT == 0)
+        {
+            Vector3 pos = FirstCheckpoint.transform.position; pos.x += -0.56f; pos.y += -0.31f; pos.z = 0;
+            gameObject.transform.position = pos;
+            //Camera
+            Vector3 camPos = FirstCheckpoint.transform.position;
+            camPos.z = -15f;
+            Camera.main.transform.position = camPos;
+            //Controller
+            gc.canSprint = false;
+            gc.canShoot = false;
+            gc.canGrapple = false;
+        }
+        else if(GAME_CHECKPOINT == 1)
+        {
+            Vector3 pos = SecondCheckpoint.transform.position; pos.x += -1.5f; pos.y += -0.4f; pos.z = 0;
+            gameObject.transform.position = pos;
+            //Camera
+            Vector3 camPos = SecondCheckpoint.transform.position;
+            camPos.z = -15f;
+            Camera.main.transform.position = camPos;
+            //Controller
+            gc.canSprint = true;
+            gc.canShoot = true;
+            gc.canGrapple = false;
+        }
+        else if(GAME_CHECKPOINT == 2)
+        {
+            Vector3 pos = SecondCheckpoint.transform.position; pos.x += 7.0f; pos.y += -0.4f; pos.z = 0;
+            gameObject.transform.position = pos;
+            //Camera
+            Vector3 camPos = SecondCheckpoint.transform.position;
+            camPos.z = -15f;
+            Camera.main.transform.position = camPos;
+            //Controller
+            gc.canSprint = true;
+            gc.canShoot = true;
+            gc.canGrapple = true;
+            //delete boss
+            //TODO DELETE BOSS
+        }
     }
 
     void Update ()
     {
-        if(Input.GetKey(KeyCode.T))
-        {
-            anim.SetTrigger("Damaged");
-        }
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            anim.SetTrigger("Death");
-        }
-
-        if (Input.GetKey(KeyCode.H))
-        {
-            anim.SetTrigger("Revive");
-        }
-
         if (gc.crouch && isOnGround)
         {
             anim.SetBool("IsDuck", true);
@@ -213,12 +258,28 @@ public class Input_Controller : MonoBehaviour {
 
 
     //these functions detect if the object is on the ground or not
-    public void OnCollisionEnter2D(Collision2D other)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.collider.tag == "Ground")
+        if (collision.collider.tag == "Ground")
         {
             isOnGround = true;
             anim.SetBool("IsOnGround", true);
+        }
+
+        if (collision.collider.tag.Equals("Bullet"))
+        {
+            currHealth -= DEC_HEALTH;
+            health.UpdateBar(currHealth, MAX_HEALTH);
+            anim.SetTrigger("Damaged");
+            if (currHealth <= 0.0f)
+                Death();
+        }
+
+        if (collision.collider.tag.Equals("GroundDeath"))
+        {
+            currHealth -= MAX_HEALTH;
+            health.UpdateBar(currHealth, MAX_HEALTH);
+            Death();
         }
 
     }
@@ -302,5 +363,18 @@ public class Input_Controller : MonoBehaviour {
             bulletScale.x *= -1;
             bullet.transform.localScale = bulletScale;
         }
+    }
+
+    private void Death()
+    {
+        anim.SetTrigger("Death");
+        gc.state = GameController.GameState.Death;
+        gm.FadeOut();
+        Invoke("Respawn", 3.0f);
+    }
+
+    private void Respawn()
+    {
+        SceneManager.LoadScene("Chapter1");
     }
 }

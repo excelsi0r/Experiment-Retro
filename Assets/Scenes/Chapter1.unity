@@ -767,6 +767,31 @@ PrefabInstance:
       propertyPath: gc
       value: 
       objectReference: {fileID: 1812355674}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 1004516990}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: gm
+      value: 
+      objectReference: {fileID: 1812355675}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: FirstCheckpoint
+      value: 
+      objectReference: {fileID: 422914868}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: SecondCheckpoint
+      value: 
+      objectReference: {fileID: 1808575567}
+    - target: {fileID: 5140034274090073864, guid: bb0b96e83c61e4f4aa58c74ab957871e,
+        type: 3}
+      propertyPath: ThirdCheckpoint
+      value: 
+      objectReference: {fileID: 1808575567}
     - target: {fileID: 8171500524273366725, guid: bb0b96e83c61e4f4aa58c74ab957871e,
         type: 3}
       propertyPath: gc
@@ -5103,27 +5128,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1215785144 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 223466248763830056, guid: bb0b96e83c61e4f4aa58c74ab957871e,
-    type: 3}
-  m_PrefabInstance: {fileID: 326651637}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1215785150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215785144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf149cb8cb6e5c48ad0d09e35583575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 1004516990}
-  gc: {fileID: 0}
-  gm: {fileID: 0}
 --- !u!1 &1227657277
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,6 +5388,70 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.367708, y: 0.5266875}
   m_EdgeRadius: 0
+--- !u!1 &1263458246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263458247}
+  - component: {fileID: 1263458248}
+  m_Layer: 0
+  m_Name: GroundDeath
+  m_TagString: GroundDeath
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1263458247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263458246}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1808575568}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1263458248
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263458246}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 77.58695, y: 18.349808}
+      - {x: 76.82034, y: -15.284798}
+      - {x: -15.127659, y: -15.514454}
+      - {x: -14.733871, y: 16.813675}
+      - {x: -17.788342, y: 16.811218}
+      - {x: -17.988268, y: -17.630278}
+      - {x: 80.460335, y: -18.11966}
+      - {x: 80.712204, y: 18.31353}
 --- !u!1 &1265588405
 GameObject:
   m_ObjectHideFlags: 0
@@ -8446,6 +8514,7 @@ Transform:
   - {fileID: 1408607963}
   - {fileID: 1653814434}
   - {fileID: 2011141293}
+  - {fileID: 1263458247}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8652,6 +8721,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple Bar
       objectReference: {fileID: 0}
+    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
+      propertyPath: barColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
+      propertyPath: barColor.g
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
+      propertyPath: barColor.b
+      value: 0.16862746
+      objectReference: {fileID: 0}
     - target: {fileID: 22403254, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8760,17 +8841,13 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.16862746
       objectReference: {fileID: 0}
-    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
-      propertyPath: barColor.r
-      value: 1
+    - target: {fileID: 22493990, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 225
       objectReference: {fileID: 0}
-    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
-      propertyPath: barColor.g
-      value: 0.16862746
-      objectReference: {fileID: 0}
-    - target: {fileID: 11487436, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
-      propertyPath: barColor.b
-      value: 0.16862746
+    - target: {fileID: 22493990, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -104
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
@@ -8890,7 +8967,7 @@ GameObject:
   - component: {fileID: 1956608786}
   m_Layer: 0
   m_Name: GroundDeath
-  m_TagString: Untagged
+  m_TagString: GroundDeath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

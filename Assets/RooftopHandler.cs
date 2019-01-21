@@ -14,6 +14,9 @@ public class RooftopHandler : MonoBehaviour
     {
         if (collision.collider.tag.Equals("Player") && player == null)
         {
+            if (Input_Controller.GAME_CHECKPOINT == 0)
+                Input_Controller.GAME_CHECKPOINT = 1;
+            
             player = collision.collider.transform.parent.gameObject;
         }
     }
